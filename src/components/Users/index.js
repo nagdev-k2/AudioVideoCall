@@ -210,6 +210,7 @@ const Users = (props) => {
       </View>
     );
   };
+  console.log('in users');
   return (
     <Layout navigation={navigation}>
       <View style={styles.body}>

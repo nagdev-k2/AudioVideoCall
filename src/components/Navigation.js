@@ -1,17 +1,21 @@
 import React, {useEffect} from 'react';
+import {AppState} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import messaging from '@react-native-firebase/messaging';
 import PushNotification from 'react-native-push-notification';
 import {isEqual} from 'lodash';
+import database from '@react-native-firebase/database';
 
+import store from '../state/store';
 import Auth from './Auth';
 import Video from './Call/Video';
 import Audio from './Call/Audio';
 import Call from './Call';
-import Users from './Users';
+import UsersComponent from './Users';
 import Entry from './index';
 import Settings from './Settings';
+import { updateProfile } from '../state/Users/actions';
 
 const Stack = createStackNavigator();
 
@@ -27,6 +31,22 @@ PushNotification.configure({
 });
 
 const Navigation = () => {
+  const _handleAppStateChange = (nextAppState) => {
+    const {Users} = store.getState();
+    if (Users) {
+      let isActive = false;
+      if (isEqual(nextAppState, 'active')) {
+        isActive = true;
+      }
+      database()
+        .ref(`/users/${Users.currentUser.mobile}`)
+        .update({isActive})
+        .then(() => {
+          store.dispatch(updateProfile({isActive}));
+        });
+    }
+  };
+
   const displayNotification = (message) => {
     const title = isEqual(message.data.status, 'start')
       ? 'Incoming Call !'
@@ -55,6 +75,8 @@ const Navigation = () => {
   };
 
   useEffect(() => {
+    AppState.addEventListener('change', _handleAppStateChange);
+
     messaging().onMessage(async (remoteMessage) => {
       console.log('Message handled in the active!', remoteMessage);
 
@@ -65,6 +87,9 @@ const Navigation = () => {
       console.log('Message handled in the background!', remoteMessage);
       displayNotification(remoteMessage);
     });
+    return () => {
+      AppState.removeEventListener('change', _handleAppStateChange);
+    };
   }, []);
   return (
     <NavigationContainer>
@@ -73,7 +98,7 @@ const Navigation = () => {
         <Stack.Screen name="Auth" component={Auth} />
         <Stack.Screen name="Video" component={Video} />
         <Stack.Screen name="Audio" component={Audio} />
-        <Stack.Screen name="Users" component={Users} />
+        <Stack.Screen name="Users" component={UsersComponent} />
         <Stack.Screen name="Call" component={Call} />
         <Stack.Screen name="Settings" component={Settings} />
       </Stack.Navigator>
