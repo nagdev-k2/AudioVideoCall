@@ -93,7 +93,7 @@ const Users = (props) => {
 
   const handleLogout = () => {
     actions.logout();
-    navigation.navigate('Home');
+    navigation.navigate('Auth');
   };
 
   const initiateCall = (type, receiver) => {

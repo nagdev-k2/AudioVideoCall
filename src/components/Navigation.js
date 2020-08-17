@@ -1,12 +1,11 @@
 import React, {useEffect} from 'react';
-import {Alert} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import messaging from '@react-native-firebase/messaging';
 import PushNotification from 'react-native-push-notification';
 import {isEqual} from 'lodash';
 
-import Home from './Home';
+import Auth from './Auth';
 import Video from './Call/Video';
 import Audio from './Call/Audio';
 import Call from './Call';
@@ -70,7 +69,7 @@ const Navigation = () => {
     <NavigationContainer>
       <Stack.Navigator initialRoute="Entry" headerMode="none">
         <Stack.Screen name="Entry" component={Entry} />
-        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Auth" component={Auth} />
         <Stack.Screen name="Video" component={Video} />
         <Stack.Screen name="Audio" component={Audio} />
         <Stack.Screen name="Users" component={Users} />

@@ -19,7 +19,7 @@ const Entry = (props) => {
         props.navigation.dispatch(
           CommonActions.reset({
             index: 0,
-            routes: [{name: 'Home'}],
+            routes: [{name: 'Auth'}],
           }),
         );
       }, 100);
