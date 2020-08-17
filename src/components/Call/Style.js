@@ -135,4 +135,10 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  userImg: {
+    marginBottom: 20,
+    borderRadius: 20,
+    width: 200,
+    height: 200,
+  },
 });

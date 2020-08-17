@@ -42,8 +42,9 @@ const Settings = (props) => {
       cropping: true,
       compressImageQuality: 0.1,
       mediaType: 'photo',
+      includeBase64: true,
     }).then((res) => {
-      handleUserImg(res.path);
+      handleUserImg(res.data);
     });
   };
 
@@ -73,7 +74,10 @@ const Settings = (props) => {
               </View>
             </View>
           ) : (
-            <Image source={{uri: img}} style={styles.userImg} />
+            <Image
+              source={{uri: `data:image/png;base64,${img}`}}
+              style={styles.userImg}
+            />
           )}
           <MaterialIcons name="mode-edit" style={styles.imgIcon} />
         </Pressable>

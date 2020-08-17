@@ -1,10 +1,11 @@
 import React, {useEffect} from 'react';
-import {View, Text, TouchableOpacity, Vibration} from 'react-native';
+import {View, Text, TouchableOpacity, Vibration, Image} from 'react-native';
 import database from '@react-native-firebase/database';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import InCallManager from 'react-native-incall-manager';
 import {CommonActions} from '@react-navigation/native';
 import {connect} from 'react-redux';
+import {isEqual} from 'lodash';
 
 import styles from './Style';
 
@@ -60,11 +61,18 @@ const Call = (props) => {
   };
   return (
     <View style={styles.callView}>
-      <View style={[styles.innerBubble, {marginBottom: 20, padding: 30}]}>
-        <View style={styles.nameBubble}>
-          <Text style={styles.bubbleText}>{user.name[0].toUpperCase()}</Text>
+      {isEqual(user.img, '') ? (
+        <View style={[styles.innerBubble, {marginBottom: 20, padding: 30}]}>
+          <View style={styles.nameBubble}>
+            <Text style={styles.bubbleText}>{user.name[0].toUpperCase()}</Text>
+          </View>
         </View>
-      </View>
+      ) : (
+        <Image
+          source={{uri: `data:image/png;base64,${user.img}`}}
+          style={styles.userImg}
+        />
+      )}
       <Text style={styles.callerText}>{`${user.name} is calling ... !`}</Text>
       <View style={styles.callContainer}>
         <TouchableOpacity

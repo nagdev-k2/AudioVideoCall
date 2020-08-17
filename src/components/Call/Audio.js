@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {View, Text, TouchableOpacity, Platform, Alert} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Platform,
+  Alert,
+  Image,
+} from 'react-native';
 import RtcEngine from 'react-native-agora';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import KeepAwake from 'react-native-keep-awake';
@@ -166,9 +173,12 @@ class Audio extends Component {
   audioView() {
     const {joinSucceed, peerIds, enableSpeaker, isMute} = this.state;
     const {user, receiver} = this.props.route.params;
-    console.log(user, receiver);
     const {currentUser} = this.props;
-    console.log('current user', currentUser);
+
+    const receiverDevice = isEqual(currentUser.mobile, user.mobile);
+    const displayUserDetails = isEqual(currentUser.mobile, user.mobile)
+      ? receiver
+      : user;
 
     return (
       <View style={styles.max}>
@@ -177,18 +187,27 @@ class Audio extends Component {
         ) : (
           <View style={styles.fullView}>
             <View style={[styles.fullView, styles.audioCallFullView]}>
-              <View style={[styles.innerBubble, {marginBottom: 50}]}>
-                <View style={styles.nameBubble}>
-                  <Text style={styles.bubbleText}>
-                    {isEqual(currentUser.mobile, user.mobile)
-                      ? receiver.name[0].toUpperCase()
-                      : user.name[0].toUpperCase()}
-                  </Text>
+              {isEqual(displayUserDetails.img, '') ? (
+                <View style={[styles.innerBubble, {marginBottom: 50}]}>
+                  <View style={styles.nameBubble}>
+                    <Text style={styles.bubbleText}>
+                      {displayUserDetails.name[0].toUpperCase()}
+                    </Text>
+                  </View>
                 </View>
-              </View>
+              ) : (
+                <Image
+                  source={{
+                    uri: `data:image/png;base64,${displayUserDetails.img}`,
+                  }}
+                  style={styles.userImg}
+                />
+            )}
               <Text style={styles.callerText}>
                 {peerIds.length < 1
-                  ? `${user.name} is calling ... !`
+                  ? !receiverDevice
+                    ? `${user.name} is calling ... !`
+                    : `Calling ${receiver.name} ...!`
                   : 'Call Connected !'}
               </Text>
             </View>

@@ -40,9 +40,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   userImg: {
-    width: 35,
-    height: 35,
+    width: 50,
+    height: 50,
     borderRadius: 50,
+    marginRight: 10,
   },
 });
 

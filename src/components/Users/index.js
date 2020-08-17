@@ -165,7 +165,6 @@ const Users = (props) => {
     const randomColor = `#${Math.floor(Math.random() * 16777215)
       .toString(16)
       .padStart(6, '0')}`;
-    console.log('item.item', item)
     return (
       <View key={item.item.mobile} style={styles.listItemContainer}>
         <View style={[styles.row, {width: '55%'}]}>
@@ -179,7 +178,10 @@ const Users = (props) => {
               </View>
             </View>
           ) : (
-            <Image source={{uri: item.item.img}} style={styles.userImg} />
+            <Image
+              source={{uri: `data:image/png;base64,${item.item.img}`}}
+              style={styles.userImg}
+            />
           )}
           <Text
             numberOfLines={1}>{`${item.item.name} (${item.item.mobile})`}</Text>

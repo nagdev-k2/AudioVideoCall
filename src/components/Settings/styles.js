@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
   userImg: {
     width: 150,
     height: 150,
+    borderRadius: 20,
   },
   imgIcon: {
     color: colors.primaryColor,

@@ -48,7 +48,10 @@ const Header = (props) => {
                   </View>
                 </View>
               ) : (
-                <Image source={{uri: currentUser.img}} style={styles.userImg} />
+                <Image
+                  source={{uri: `data:image/png;base64,${currentUser.img}`}}
+                  style={styles.userImg}
+                />
               )}
             </Pressable>
             <TouchableOpacity onPress={handleLogout}>
