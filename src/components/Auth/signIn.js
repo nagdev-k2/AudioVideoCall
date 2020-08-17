@@ -17,7 +17,7 @@ const SignIn = (props) => {
   const {toggleSignIn} = props;
 
   const handleGo = () => {
-    const user = {mobile, password, name: 'test'};
+    let user = {mobile, password, name: 'test'};
     if (user.password.trim().length > 0 && user.mobile.trim().length === 10) {
       messaging()
         .getToken()
@@ -27,6 +27,7 @@ const SignIn = (props) => {
             .once('value')
             .then((res) => {
               if (res.val() && isEqual(res.val().password, user.password)) {
+                user = res.val();
                 database()
                   .ref(`/users/${mobile}`)
                   .update({fcmToken})

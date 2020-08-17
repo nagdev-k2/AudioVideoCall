@@ -17,6 +17,7 @@ import invokeApp from 'react-native-invoke-app';
 import styles from './styles';
 import {logout} from '../../state/Users/actions';
 import {startCall} from '../../state/Users/operations';
+import Header from '../Layout/header';
 
 const Users = (props) => {
   const [users, handleUsers] = useState([]);
@@ -204,12 +205,7 @@ const Users = (props) => {
   };
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Available Users</Text>
-        <TouchableOpacity onPress={handleLogout}>
-          <MaterialIcons name="exit-to-app" size={30} color="white" />
-        </TouchableOpacity>
-      </View>
+      <Header navigation={navigation} />
       <View style={styles.body}>
         <FlatList
           data={users}

@@ -5,21 +5,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  header: {
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%',
-    backgroundColor: '#0093E9',
-    height: 60,
-    top: 0,
-    left: 0,
-    right: 0,
-    borderBottomWidth: 1,
-    elevation: 6.0,
-    borderBottomColor: 'lightgrey',
-    paddingHorizontal: 20,
-    flexDirection: 'row',
-  },
   body: {
     padding: 5,
   },
@@ -36,11 +21,6 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  headerText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
   },
   callBtn: {
     padding: 8,
