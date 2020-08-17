@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import colors from '../../constants/colors';
 
 const styles = StyleSheet.create({
   container: {
@@ -44,6 +45,16 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 50,
     marginRight: 10,
+  },
+  active: {
+    position: 'absolute',
+    backgroundColor: colors.green,
+    width: 10,
+    height: 10,
+    borderRadius: 50,
+    zIndex: 9,
+    top: 0,
+    left: 38,
   },
 });
 

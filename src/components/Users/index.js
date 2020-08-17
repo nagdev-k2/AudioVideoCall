@@ -68,6 +68,7 @@ const Users = (props) => {
                 name: snapshot.val()[mobile].name,
                 fcmToken: snapshot.val()[mobile].fcmToken,
                 img: snapshot.val()[mobile].img,
+                isActive: snapshot.val()[mobile].isActive,
               };
               allUsers.push(obj);
             }
@@ -168,6 +169,7 @@ const Users = (props) => {
     return (
       <View key={item.item.mobile} style={styles.listItemContainer}>
         <View style={[styles.row, {width: '55%'}]}>
+          {item.item.isActive && <View style={styles.active} />}
           {isEqual(item.item.img, '') ? (
             <View style={[styles.outerCircle, {backgroundColor: randomColor}]}>
               <View

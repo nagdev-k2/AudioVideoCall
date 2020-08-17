@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {CommonActions} from '@react-navigation/native';
 import {isEqual} from 'lodash';
+import database from '@react-native-firebase/database';
 
 import styles from './styles';
 import {logout} from '../../state/Users/actions';
@@ -12,22 +13,25 @@ import {logout} from '../../state/Users/actions';
 const Header = (props) => {
   const {currentUser, navigation, actions, isBack, title} = props;
   const handleLogout = () => {
-    actions.logout();
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{name: 'Auth'}],
-      }),
-    );
+    database()
+      .ref(`/users/${currentUser.mobile}`)
+      .update({isActive: false})
+      .then(() => {
+        actions.logout();
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{name: 'Auth'}],
+          }),
+        );
+      });
   };
   return (
     <View style={styles.header}>
       {isBack ? (
         <Pressable style={styles.backBtn} onPress={() => navigation.goBack()}>
           <MaterialIcons name="arrow-back" size={30} color="white" />
-          <Text style={[styles.headerText, {marginLeft: 10}]}>
-            {props.title}
-          </Text>
+          <Text style={[styles.headerText, {marginLeft: 10}]}>{title}</Text>
         </Pressable>
       ) : (
         <>

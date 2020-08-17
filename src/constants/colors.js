@@ -10,5 +10,6 @@ export default {
   grey: 'grey',
   red: 'red',
   yellow: '#FFDE00',
+  green: '#00e676',
   randomColor,
 };

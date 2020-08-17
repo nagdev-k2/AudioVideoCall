@@ -28,18 +28,25 @@ const SignIn = (props) => {
             .then((res) => {
               if (res.val() && isEqual(res.val().password, user.password)) {
                 user = res.val();
-                database()
-                  .ref(`/users/${mobile}`)
-                  .update({fcmToken})
-                  .then(() => {
-                    handleErrorMessage('');
-                    handleMobileNo('');
-                    handlePassword('');
-                    props.actions.loginDetails(user);
-                    props.navigation.navigate('Users', {
-                      user: {...user, fcmToken},
+                if (!user.isActive) {
+                  database()
+                    .ref(`/users/${mobile}`)
+                    .update({fcmToken, isActive: true})
+                    .then(() => {
+                      handleErrorMessage('');
+                      handleMobileNo('');
+                      handlePassword('');
+                      props.actions.loginDetails(user);
+                      props.navigation.navigate('Users', {
+                        user: {...user, fcmToken},
+                      });
                     });
-                  });
+                } else {
+                  Alert.alert(
+                    'Login Error',
+                    'You are already logged in with some other device. Please logout from other devices to continue.',
+                  );
+                }
               } else {
                 handleErrorMessage('Incorrect Id or Password');
               }

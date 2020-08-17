@@ -58,6 +58,10 @@ const Settings = (props) => {
         text: 'Gallery',
         onPress: () => selectImage('openPicker'),
       },
+      {
+        text: 'Remove Profile Photo',
+        onPress: () => handleUserImg(''),
+      },
     ]);
   };
 
