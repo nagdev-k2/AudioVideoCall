@@ -5,6 +5,7 @@ import {isEqual} from 'lodash';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import database from '@react-native-firebase/database';
 import {bindActionCreators} from 'redux';
+import ImagePicker from 'react-native-image-crop-picker';
 
 import styles from './styles';
 import Layout from '../Layout';
@@ -16,7 +17,7 @@ const Settings = (props) => {
   const [name, handleName] = useState(currentUser.name);
   const [password, handlePassword] = useState(currentUser.password);
   const [img, handleUserImg] = useState(currentUser.img);
-  const {gender} = currentUser;
+
   const handleGo = () => {
     const user = {name, password, img};
     if (user.name.trim().length > 0 && user.password.trim().length > 2) {
@@ -36,10 +37,33 @@ const Settings = (props) => {
     }
   };
 
+  const selectImage = (type) => {
+    ImagePicker[type]({
+      cropping: true,
+      compressImageQuality: 0.1,
+      mediaType: 'photo',
+    }).then((res) => {
+      handleUserImg(res.path);
+    });
+  };
+
+  const openPicker = () => {
+    Alert.alert('Change Profile', 'Select Camera or Gallery to pick image', [
+      {
+        text: 'Camera',
+        onPress: () => selectImage('openCamera'),
+      },
+      {
+        text: 'Gallery',
+        onPress: () => selectImage('openPicker'),
+      },
+    ]);
+  };
+
   return (
     <Layout title="Settings" navigation={navigation} isBack={true}>
       <View style={styles.container}>
-        <Pressable onPress={() => navigation.navigate('Settings')}>
+        <Pressable onPress={openPicker}>
           {isEqual(img, '') ? (
             <View style={styles.outerCircle}>
               <View style={styles.innerCircle}>
@@ -76,7 +100,7 @@ const Settings = (props) => {
           onChangeText={handlePassword}
         />
         <View style={[styles.input, styles.genderView]}>
-          <Text>Gender: {gender}</Text>
+          <Text>Gender: {currentUser.gender}</Text>
         </View>
         <Pressable style={styles.btn} onPress={handleGo}>
           <Text style={styles.btnText}>Update Profile</Text>

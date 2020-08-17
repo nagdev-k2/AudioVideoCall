@@ -6,6 +6,7 @@ import {
   FlatList,
   Alert,
   AppState,
+  Image,
 } from 'react-native';
 import database from '@react-native-firebase/database';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -66,6 +67,7 @@ const Users = (props) => {
                 mobile,
                 name: snapshot.val()[mobile].name,
                 fcmToken: snapshot.val()[mobile].fcmToken,
+                img: snapshot.val()[mobile].img,
               };
               allUsers.push(obj);
             }
@@ -90,11 +92,6 @@ const Users = (props) => {
         onPress: () => database().ref(`/users/${item.mobile}`).remove(),
       },
     ]);
-  };
-
-  const handleLogout = () => {
-    actions.logout();
-    navigation.navigate('Auth');
   };
 
   const initiateCall = (type, receiver) => {
@@ -168,16 +165,22 @@ const Users = (props) => {
     const randomColor = `#${Math.floor(Math.random() * 16777215)
       .toString(16)
       .padStart(6, '0')}`;
+    console.log('item.item', item)
     return (
       <View key={item.item.mobile} style={styles.listItemContainer}>
         <View style={[styles.row, {width: '55%'}]}>
-          <View style={[styles.outerCircle, {backgroundColor: randomColor}]}>
-            <View style={[styles.innerCircle, {backgroundColor: randomColor}]}>
-              <Text style={{fontSize: 18}}>
-                {item.item.name[0].toUpperCase()}
-              </Text>
+          {isEqual(item.item.img, '') ? (
+            <View style={[styles.outerCircle, {backgroundColor: randomColor}]}>
+              <View
+                style={[styles.innerCircle, {backgroundColor: randomColor}]}>
+                <Text style={{fontSize: 18}}>
+                  {item.item.name[0].toUpperCase()}
+                </Text>
+              </View>
             </View>
-          </View>
+          ) : (
+            <Image source={{uri: item.item.img}} style={styles.userImg} />
+          )}
           <Text
             numberOfLines={1}>{`${item.item.name} (${item.item.mobile})`}</Text>
         </View>

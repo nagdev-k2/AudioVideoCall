@@ -7,15 +7,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  bubbleText: {
+    fontWeight: 'bold',
+    color: colors.white,
+    fontSize: 60,
+  },
   innerCircle: {
-    width: 100,
-    height: 100,
+    width: 90,
+    height: 90,
     borderRadius: 50,
     backgroundColor: colors.randomColor,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   outerCircle: {
     padding: 10,
     opacity: 0.5,
+    borderRadius: 50,
+    backgroundColor: colors.randomColor,
   },
   userImg: {
     width: 150,
