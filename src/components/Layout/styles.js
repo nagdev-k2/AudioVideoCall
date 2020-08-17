@@ -3,6 +3,10 @@ import {StyleSheet} from 'react-native';
 import colors from '../../constants/colors';
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
   header: {
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -55,6 +59,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.white,
     borderRadius: 50,
+  },
+  backBtn: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
   },
 });
 

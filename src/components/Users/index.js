@@ -17,7 +17,7 @@ import invokeApp from 'react-native-invoke-app';
 import styles from './styles';
 import {logout} from '../../state/Users/actions';
 import {startCall} from '../../state/Users/operations';
-import Header from '../Layout/header';
+import Layout from '../Layout';
 
 const Users = (props) => {
   const [users, handleUsers] = useState([]);
@@ -204,8 +204,7 @@ const Users = (props) => {
     );
   };
   return (
-    <View style={styles.container}>
-      <Header navigation={navigation} />
+    <Layout navigation={navigation}>
       <View style={styles.body}>
         <FlatList
           data={users}
@@ -213,7 +212,7 @@ const Users = (props) => {
           keyExtractor={(item) => item.mobile}
         />
       </View>
-    </View>
+    </Layout>
   );
 };
 

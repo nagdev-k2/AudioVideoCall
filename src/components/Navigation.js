@@ -11,6 +11,7 @@ import Audio from './Call/Audio';
 import Call from './Call';
 import Users from './Users';
 import Entry from './index';
+import Settings from './Settings';
 
 const Stack = createStackNavigator();
 
@@ -74,6 +75,7 @@ const Navigation = () => {
         <Stack.Screen name="Audio" component={Audio} />
         <Stack.Screen name="Users" component={Users} />
         <Stack.Screen name="Call" component={Call} />
+        <Stack.Screen name="Settings" component={Settings} />
       </Stack.Navigator>
     </NavigationContainer>
   );

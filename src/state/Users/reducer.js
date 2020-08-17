@@ -1,6 +1,6 @@
 import {isEqual} from 'lodash';
 
-import {LOGIN, LOGOUT} from '../types';
+import {LOGIN, LOGOUT, UPDATE_PROFILE} from '../types';
 
 const initialState = {
   currentUser: {},
@@ -14,6 +14,14 @@ const UsersReducer = (state = initialState, action) => {
         ...state,
         currentUser: action.data,
         isAdmin: isEqual(action.data.mobile, '7566881369'),
+      };
+    case UPDATE_PROFILE:
+      console.log('in update profile');
+      console.log(state);
+      console.log(action);
+      return {
+        ...state,
+        currentUser: {...state.currentUser, ...action.data},
       };
     case LOGOUT:
       return initialState;

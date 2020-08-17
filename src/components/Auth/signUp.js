@@ -84,10 +84,10 @@ const SignUp = (props) => {
         <Text>Gender: </Text>
         <TouchableOpacity
           style={styles.radioBtn}
-          onPress={() => handleGender('male')}>
+          onPress={() => handleGender('Male')}>
           <MaterialIcons
             name={
-              isEqual(gender, 'male')
+              isEqual(gender, 'Male')
                 ? 'radio-button-checked'
                 : 'radio-button-unchecked'
             }
@@ -98,10 +98,10 @@ const SignUp = (props) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.radioBtn}
-          onPress={() => handleGender('female')}>
+          onPress={() => handleGender('Female')}>
           <MaterialIcons
             name={
-              isEqual(gender, 'female')
+              isEqual(gender, 'Female')
                 ? 'radio-button-checked'
                 : 'radio-button-unchecked'
             }

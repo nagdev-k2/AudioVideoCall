@@ -10,7 +10,7 @@ import styles from './styles';
 import {logout} from '../../state/Users/actions';
 
 const Header = (props) => {
-  const {currentUser, navigation, actions} = props;
+  const {currentUser, navigation, actions, isBack, title} = props;
   const handleLogout = () => {
     actions.logout();
     navigation.dispatch(
@@ -22,29 +22,41 @@ const Header = (props) => {
   };
   return (
     <View style={styles.header}>
-      <Text style={styles.headerText}>Available Users</Text>
-      <View style={styles.rightView}>
-        <Pressable
-          style={[
-            styles.settingBtn,
-            {padding: !isEqual(currentUser.img, '') ? 5 : 0},
-          ]}>
-          {isEqual(currentUser.img, '') ? (
-            <View style={styles.outerCircle}>
-              <View style={styles.innerCircle}>
-                <Text style={styles.bubbleText}>
-                  {currentUser.name[0].toUpperCase()}
-                </Text>
-              </View>
-            </View>
-          ) : (
-            <Image source={{uri: currentUser.img}} style={styles.userImg} />
-          )}
+      {isBack ? (
+        <Pressable style={styles.backBtn} onPress={() => navigation.goBack()}>
+          <MaterialIcons name="arrow-back" size={30} color="white" />
+          <Text style={[styles.headerText, {marginLeft: 10}]}>
+            {props.title}
+          </Text>
         </Pressable>
-        <TouchableOpacity onPress={handleLogout}>
-          <MaterialIcons name="exit-to-app" size={30} color="white" />
-        </TouchableOpacity>
-      </View>
+      ) : (
+        <>
+          <Text style={styles.headerText}>Available Users</Text>
+          <View style={styles.rightView}>
+            <Pressable
+              onPress={() => navigation.navigate('Settings')}
+              style={[
+                styles.settingBtn,
+                {padding: !isEqual(currentUser.img, '') ? 5 : 0},
+              ]}>
+              {isEqual(currentUser.img, '') ? (
+                <View style={styles.outerCircle}>
+                  <View style={styles.innerCircle}>
+                    <Text style={styles.bubbleText}>
+                      {currentUser.name[0].toUpperCase()}
+                    </Text>
+                  </View>
+                </View>
+              ) : (
+                <Image source={{uri: currentUser.img}} style={styles.userImg} />
+              )}
+            </Pressable>
+            <TouchableOpacity onPress={handleLogout}>
+              <MaterialIcons name="exit-to-app" size={30} color="white" />
+            </TouchableOpacity>
+          </View>
+        </>
+      )}
     </View>
   );
 };
